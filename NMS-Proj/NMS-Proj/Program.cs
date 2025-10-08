@@ -57,7 +57,8 @@ void WireRelations()
     }
 }
 
-WireRelations();
+WireRelations(); // Inicializa as relações entre as entidades planetas, sistemas e exploradores
+
 
 // Exploradores final de endpoints da pesquisa
 app.MapGet("/exploradores", () => Results.Ok(exploradores));
@@ -103,18 +104,21 @@ app.MapDelete("/exploradores/{id:int}", (int id) =>
 // Sistemas Estelares endpoint
 app.MapGet("/sistemas", () => Results.Ok(sistemas));
 
+// Identifica sistema pelo Id
 app.MapGet("/sistemas/{id:int}", (int id) =>
 {
     var s = sistemas.FirstOrDefault(x => x.Id == id);
     return s is null ? Results.NotFound() : Results.Ok(s);
 });
 
+// Retorna todos os planetas de um sistema estelar específico
 app.MapGet("/sistemas/{id:int}/planetas", (int id) =>
 {
     var list = planetas.Where(p => p.SistemaEstelarId == id).ToList();
     return Results.Ok(list);
 });
 
+// Adiciona sistema estelar com Id randomico
 app.MapPost("/sistemas", (SistemaEstelar novo) =>
 {
     var nextId = sistemas.Any() ? sistemas.Max(x => x.Id) + 1 : 1;
@@ -124,6 +128,7 @@ app.MapPost("/sistemas", (SistemaEstelar novo) =>
     return Results.Created($"/sistemas/{novo.Id}", novo);
 });
 
+// Atualiza sistema estelar pelo Id manulamente
 app.MapPut("/sistemas/{id:int}", (int id, SistemaEstelar updated) =>
 {
     var s = sistemas.FirstOrDefault(x => x.Id == id);
@@ -135,6 +140,7 @@ app.MapPut("/sistemas/{id:int}", (int id, SistemaEstelar updated) =>
     return Results.NoContent();
 });
 
+// Remove sistema estelar pelo Id e todos os planetas associados
 app.MapDelete("/sistemas/{id:int}", (int id) =>
 {
     var s = sistemas.FirstOrDefault(x => x.Id == id);
@@ -160,6 +166,7 @@ app.MapGet("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome) =>
     return p is null ? Results.NotFound() : Results.Ok(p);
 });
 
+// Adiciona planeta com validações básicas
 app.MapPost("/planetas", (Planeta novo) =>
 {
     // Validação basica
@@ -170,11 +177,13 @@ app.MapPost("/planetas", (Planeta novo) =>
     if (planetas.Any(p => p.SistemaEstelarId == novo.SistemaEstelarId && string.Equals(p.Nome, novo.Nome, StringComparison.OrdinalIgnoreCase)))
         return Results.Conflict("Já existe um planeta com esse nome neste sistema estelar.");
 
+// Adiciona o planeta
     planetas.Add(novo);
     WireRelations();
     return Results.Created($"/planetas/{novo.SistemaEstelarId}/{novo.Nome}", novo);
 });
 
+// Atualiza planeta pelo sistemaId + nome
 app.MapPut("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome, Planeta updated) =>
 {
     var p = planetas.FirstOrDefault(x => x.SistemaEstelarId == sistemaId && string.Equals(x.Nome, nome, StringComparison.OrdinalIgnoreCase));
@@ -189,12 +198,14 @@ app.MapPut("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome, Plan
     return Results.NoContent();
 });
 
+// Remove planeta pelo sistemaId + nome
 app.MapDelete("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome) =>
 {
     var removed = planetas.RemoveAll(x => x.SistemaEstelarId == sistemaId && string.Equals(x.Nome, nome, StringComparison.OrdinalIgnoreCase));
     WireRelations();
     return removed > 0 ? Results.NoContent() : Results.NotFound();
 });
+
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
