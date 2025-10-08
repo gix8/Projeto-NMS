@@ -127,7 +127,19 @@ app.MapPost("/sistemas", (SistemaEstelar novo) =>
     var nextId = sistemas.Any() ? sistemas.Max(x => x.Id) + 1 : 1;
     novo.Id = nextId;
     sistemas.Add(novo);
-    WireRelations();
+    // Lógica atualizada: Adicionar pontos baseados em qntdPlanetas
+    var explorador = exploradores.FirstOrDefault(e => e.Id == novo.ExploradorId);
+    if (explorador != null)
+    {
+        explorador.Pontuacao += novo.qntdPlanetas;  // Incrementa pela quantidade de planetas
+        Console.WriteLine($"Pontuação atualizada para explorador {explorador.Nome}: +{novo.qntdPlanetas} (total: {explorador.Pontuacao})");  // Opcional: Log para debug
+    }
+    else
+    {
+        Console.WriteLine($"Explorador com ID {novo.ExploradorId} não encontrado. Pontos não adicionados.");
+        return Results.BadRequest("Explorador não encontrado.");
+    }
+    WireRelations();  // Mantém a configuração de relações
     return Results.Created($"/sistemas/{novo.Id}", novo);
 });
 
@@ -174,15 +186,33 @@ app.MapPost("/planetas", (Planeta novo) =>
 {
     // Validação basica
     // Vai retornar BadRequest se o sistema ou explorador não existirem
-    if (!sistemas.Any(s => s.Id == novo.SistemaEstelarId)) return Results.BadRequest("SistemaEstelarId inválido");
-    if (!exploradores.Any(e => e.Id == novo.ExploradorId)) return Results.BadRequest("ExploradorId inválido");
-    // Verifica se há duplicidade pelo nome no mesmo sistema
-    if (planetas.Any(p => p.SistemaEstelarId == novo.SistemaEstelarId && string.Equals(p.Nome, novo.Nome, StringComparison.OrdinalIgnoreCase)))
-        return Results.Conflict("Já existe um planeta com esse nome neste sistema estelar.");
-
-// Adiciona o planeta
     planetas.Add(novo);
-    WireRelations();
+    // Lógica de pontuação: Calcular e adicionar pontos ao explorador
+    var explorador = exploradores.FirstOrDefault(e => e.Id == novo.ExploradorId);
+    if (explorador != null)  // Já validado, mas para segurança
+    {
+        int pontosBase = 5;
+        int pontosQualidades = 0;
+        // Verificar cada qualidade 
+        var qualidades = new[] { novo.Clima, novo.Fauna, novo.Flora, novo.Sentinelas };
+        foreach (var qualidade in qualidades)
+        {
+            if (!string.IsNullOrWhiteSpace(qualidade))  // Ignora vazios/nulos
+            {
+                var qualidadeTrim = qualidade.Trim();
+                if (string.Equals(qualidadeTrim, "bom", StringComparison.OrdinalIgnoreCase))
+                    pontosQualidades += 1;
+                else if (string.Equals(qualidadeTrim, "ruim", StringComparison.OrdinalIgnoreCase))
+                    pontosQualidades -= 1;
+                // Outros valores: +0
+            }
+        }
+        int totalPontos = pontosBase + pontosQualidades;
+        explorador.Pontuacao += totalPontos;
+        //Log para debug
+        Console.WriteLine($"Pontos adicionados ao explorador {explorador.Nome}: +{totalPontos} (base: {pontosBase}, qualidades: {pontosQualidades}) - Total: {explorador.Pontuacao}");
+    }
+    WireRelations();  
     return Results.Created($"/planetas/{novo.SistemaEstelarId}/{novo.Nome}", novo);
 });
 
@@ -208,6 +238,38 @@ app.MapDelete("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome) =
     WireRelations();
     return removed > 0 ? Results.NoContent() : Results.NotFound();
 });
+
+// Pesquisar pelo nome do explorador e listar todos os planetas e sistemas associados (case insensitive)
+app.MapGet("/exploradores/pesquisa/{nome}", (string nome) =>
+{
+    var e = exploradores.FirstOrDefault(ex => ex.Nome.Contains(nome, StringComparison.OrdinalIgnoreCase));
+    if (e is null) return Results.NotFound();
+    var result = new
+    {
+        Explorador = e,
+        SistemasEstelares = sistemas.Where(s => s.ExploradorId == e.Id).ToList(),
+        PlanetasExplorados = planetas.Where(p => p.ExploradorId == e.Id).ToList()
+    };
+    return Results.Ok(result);
+});
+
+// Pesquisa pelo nome do planeta (case insensitive) e retorna o planeta, recursos, sistema estelar e explorador
+app.MapGet("/planetas/pesquisa/{nome}", (string nome) =>
+{
+    var p = planetas.FirstOrDefault(pl => pl.Nome.Contains(nome, StringComparison.OrdinalIgnoreCase));
+    if (p is null) return Results.NotFound();
+    var s = sistemas.FirstOrDefault(se => se.Id == p.SistemaEstelarId);
+    var e = exploradores.FirstOrDefault(ex => ex.Id == p.ExploradorId);
+    var result = new
+    {
+        Planeta = p,
+        Recursos = p.Recursos,
+        SistemaEstelar = s,
+        Explorador = e
+    };
+    return Results.Ok(result);
+});
+
 
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));

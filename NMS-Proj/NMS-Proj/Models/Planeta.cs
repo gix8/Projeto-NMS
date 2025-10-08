@@ -6,10 +6,15 @@ namespace NMS_Proj.Models
     public class Planeta
     {
         public string Nome { get; set; }
+        public string NomeQualidade { get; set; }
         public string Clima { get; set; }
+        public string ClimaQualidade { get; set; }
         public string Fauna { get; set; }
+        public string FaunaQualidade { get; set; }
         public string Flora { get; set; }
+        public string FloraQualidade { get; set; }
         public string Sentinelas { get; set; }
+        public string SentinelasQualidade { get; set; }
 
         public int SistemaEstelarId { get; set; }  //FK para SistemaEstelar
 

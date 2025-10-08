@@ -6,6 +6,8 @@ namespace NMS_Proj.Models
     {
         public int Id { get; set; }  // Chave primária
 
+        public int Pontuacao { get; set; } = 0;
+
         public string Nome { get; set; }
 
         // Propriedade de navegação: Um explorador pode ter muitos sistemas estelares
