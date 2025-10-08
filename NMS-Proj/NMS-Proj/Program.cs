@@ -45,6 +45,6 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 
 // Esse é o código auto gerado pelo template do .NET 6 para Web API.
 // Vamo remover ele depois que a gente começar a implementar as funcionalidades
-// mas primeiro vamo fazer os modelos e as controllers.
+// mas primeiro vamo fazer os modelos e os controllers.
 // ja criei os modelos de Explorador e SistemaEstelar, não coloquei nada neles ainda.
 // Vou ter que dar uma olhada no NMS pra ver exatamente o que por neles.
