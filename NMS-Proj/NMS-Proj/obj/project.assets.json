@@ -482,19 +482,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\giova\\.nuget\\packages\\": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\giova\\Desktop\\Projeto-NMS\\NMS-Proj\\NMS-Proj\\NMS-Proj.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\Projeto-NMS-main\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
       "projectName": "NMS-Proj",
-      "projectPath": "C:\\Users\\giova\\Desktop\\Projeto-NMS\\NMS-Proj\\NMS-Proj\\NMS-Proj.csproj",
-      "packagesPath": "C:\\Users\\giova\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\giova\\Desktop\\Projeto-NMS\\NMS-Proj\\NMS-Proj\\obj\\",
+      "projectPath": "C:\\Users\\User\\Desktop\\Projeto-NMS-main\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\Projeto-NMS-main\\NMS-Proj\\NMS-proj\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\giova\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -551,7 +551,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
