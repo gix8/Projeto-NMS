@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\Projeto-NMS-main\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj": {}
+    "C:\\Users\\User\\Desktop\\yey\\Projeto-NMS\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\Projeto-NMS-main\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj": {
+    "C:\\Users\\User\\Desktop\\yey\\Projeto-NMS\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\Projeto-NMS-main\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\yey\\Projeto-NMS\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
         "projectName": "NMS-Proj",
-        "projectPath": "C:\\Users\\User\\Desktop\\Projeto-NMS-main\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\yey\\Projeto-NMS\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\Projeto-NMS-main\\NMS-Proj\\NMS-proj\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\yey\\Projeto-NMS\\NMS-Proj\\NMS-proj\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
