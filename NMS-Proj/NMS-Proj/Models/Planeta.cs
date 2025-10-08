@@ -1,11 +1,14 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace NMS_Proj.Models
 {
     public class Planeta
     {
+        [Key]
         public string Nome { get; set; }
+
         public string NomeQualidade { get; set; }
         public string Clima { get; set; }
         public string ClimaQualidade { get; set; }
