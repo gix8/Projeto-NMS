@@ -63,12 +63,14 @@ WireRelations(); // Inicializa as relações entre as entidades planetas, sistem
 // Exploradores final de endpoints da pesquisa
 app.MapGet("/exploradores", () => Results.Ok(exploradores));
 
+// Identifica explorador pelo Id
 app.MapGet("/exploradores/{id:int}", (int id) =>
 {
     var e = exploradores.FirstOrDefault(x => x.Id == id);
     return e is null ? Results.NotFound() : Results.Ok(e);
 });
 
+// Adiciona explorador com Id randomico
 app.MapPost("/exploradores", (Explorador novo) =>
 {
     var nextId = exploradores.Any() ? exploradores.Max(x => x.Id) + 1 : 1;
@@ -78,6 +80,7 @@ app.MapPost("/exploradores", (Explorador novo) =>
     return Results.Created($"/exploradores/{novo.Id}", novo);
 });
 
+// Atualiza explorador pelo Id manualmente
 app.MapPut("/exploradores/{id:int}", (int id, Explorador updated) =>
 {
     var e = exploradores.FirstOrDefault(x => x.Id == id);
@@ -87,6 +90,7 @@ app.MapPut("/exploradores/{id:int}", (int id, Explorador updated) =>
     return Results.NoContent();
 });
 
+// Remove explorador pelo Id e todos os sistemas e planetas associados
 app.MapDelete("/exploradores/{id:int}", (int id) =>
 {
     var e = exploradores.FirstOrDefault(x => x.Id == id);
