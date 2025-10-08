@@ -240,6 +240,38 @@ app.MapDelete("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome) =
     return removed > 0 ? Results.NoContent() : Results.NotFound();
 });
 
+// Pesquisar pelo nome do explorador e listar todos os planetas e sistemas associados (case insensitive)
+app.MapGet("/exploradores/pesquisa/{nome}", (string nome) =>
+{
+    var e = exploradores.FirstOrDefault(ex => ex.Nome.Contains(nome, StringComparison.OrdinalIgnoreCase));
+    if (e is null) return Results.NotFound();
+    var result = new
+    {
+        Explorador = e,
+        SistemasEstelares = sistemas.Where(s => s.ExploradorId == e.Id).ToList(),
+        PlanetasExplorados = planetas.Where(p => p.ExploradorId == e.Id).ToList()
+    };
+    return Results.Ok(result);
+});
+
+// Pesquisa pelo nome do planeta (case insensitive) e retorna o planeta, recursos, sistema estelar e explorador
+app.MapGet("/planetas/pesquisa/{nome}", (string nome) =>
+{
+    var p = planetas.FirstOrDefault(pl => pl.Nome.Contains(nome, StringComparison.OrdinalIgnoreCase));
+    if (p is null) return Results.NotFound();
+    var s = sistemas.FirstOrDefault(se => se.Id == p.SistemaEstelarId);
+    var e = exploradores.FirstOrDefault(ex => ex.Id == p.ExploradorId);
+    var result = new
+    {
+        Planeta = p,
+        Recursos = p.Recursos,
+        SistemaEstelar = s,
+        Explorador = e
+    };
+    return Results.Ok(result);
+});
+
+
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
 
