@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NMS-Proj")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+19f34a81341311dd9858996d25081ed373514efa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12315d73893165d4db7b3ff00badddc9b9e37174")]
 [assembly: System.Reflection.AssemblyProductAttribute("NMS-Proj")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NMS-Proj")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
