@@ -1,13 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using NMS_Proj.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDataContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers()
+    .AddJsonOptions(opts =>
+    {
+        // Prevenir "possible object cycle" 
+        opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -15,39 +23,33 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Teste de geração de dados in-memory (simulando um banco de dados)
-var exploradores = new List<Explorador>
-{
-    new Explorador { Id = 1, Nome = "Ava" },
-    new Explorador { Id = 2, Nome = "Kai" }
-};
-
-var sistemas = new List<SistemaEstelar>
-{
-    new SistemaEstelar { Id = 1, Nome = "Alpha Centauri", qntdPlanetas = 2, ExploradorId = 1 },
-    new SistemaEstelar { Id = 2, Nome = "TRAPPIST-1", qntdPlanetas = 3, ExploradorId = 2 }
-};
-
-var planetas = new List<Planeta>
-{
-    new Planeta { Nome = "Proxima b", Clima = "Temperado", Fauna = "Desconhecida", Flora = "Nenhuma", Sentinelas = "Baixa", SistemaEstelarId = 1, ExploradorId = 1, Recursos = "H2O,Fe" },
-    new Planeta { Nome = "TRAP-1a", Clima = "Árido", Fauna = "Microscópica", Flora = "Líquens", Sentinelas = "Média", SistemaEstelarId = 2, ExploradorId = 2, Recursos = "Si,Al" }
-};
 
 // Teste de geração de dados in-memory (simulando um banco de dados)
 // Para demonstrar relações entre entidades sem um banco real com a funcionalidade de navegação
-void WireRelations()
+void WireRelations(AppDataContext ctx)
 {
+    var sistemas = ctx.Sistemas.ToList();
+    var exploradores = ctx.Exploradores.ToList();
+    var planetas = ctx.Planetas.ToList();
+
     foreach (var s in sistemas)
     {
-        s.Explorador = exploradores.FirstOrDefault(e => e.Id == s.ExploradorId);
+        var exploradorDoSistema = exploradores.FirstOrDefault(e => e.Id == s.ExploradorId);
+        if (exploradorDoSistema != null)
+            s.Explorador = exploradorDoSistema;
+
         s.Planetas = planetas.Where(p => p.SistemaEstelarId == s.Id).ToList();
     }
 
     foreach (var p in planetas)
     {
-        p.SistemaEstelar = sistemas.FirstOrDefault(s => s.Id == p.SistemaEstelarId);
-        p.Explorador = exploradores.FirstOrDefault(e => e.Id == p.ExploradorId);
+        var sistemaDoPlaneta = sistemas.FirstOrDefault(s => s.Id == p.SistemaEstelarId);
+        if (sistemaDoPlaneta != null)
+            p.SistemaEstelar = sistemaDoPlaneta;
+
+        var exploradorDoPlaneta = exploradores.FirstOrDefault(e => e.Id == p.ExploradorId);
+        if (exploradorDoPlaneta != null)
+            p.Explorador = exploradorDoPlaneta;
     }
 
     foreach (var e in exploradores)
@@ -57,11 +59,16 @@ void WireRelations()
     }
 }
 
-WireRelations(); // Inicializa as relações entre as entidades planetas, sistemas e exploradores
+// create a scope, get the DbContext and call WireRelations
+using (var scope = app.Services.CreateScope())
+{
+    var ctx = scope.ServiceProvider.GetRequiredService<AppDataContext>();
+    WireRelations(ctx); 
+}
 
 
 // Exploradores final de endpoints da pesquisa
-app.MapGet("/exploradores", () => Results.Ok(exploradores));
+app.MapGet("/exploradores", (AppDataContext ctx) => Results.Ok(ctx.Exploradores.ToList()));
 
 // Identifica explorador pelo Id
 app.MapGet("/exploradores/{id:int}", (int id, AppDataContext ctx) =>
@@ -86,7 +93,7 @@ app.MapPut("/exploradores/{id:int}", (int id, Explorador updated, AppDataContext
     if (e is null) return Results.NotFound();
     e.Nome = updated.Nome;
     ctx.SaveChanges();
-    WireRelations();
+    WireRelations(ctx);
     return Results.NoContent();
 });
 
@@ -106,13 +113,13 @@ app.MapDelete("/exploradores/{id:int}", (int id, AppDataContext ctx) =>
 
     ctx.Exploradores.Remove(e);
     ctx.SaveChanges();
-    WireRelations();
+    WireRelations(ctx);
     return Results.NoContent();
 });
 
 // Verifica se o sistema existe antes de adicionar um planeta
 // Sistemas Estelares endpoint
-app.MapGet("/sistemas", () => Results.Ok(sistemas));
+app.MapGet("/sistemas", (AppDataContext ctx) => Results.Ok(ctx.Sistemas.ToList()));
 
 // Identifica sistema pelo Id
 app.MapGet("/sistemas/{id:int}", (int id, AppDataContext ctx) =>
@@ -159,7 +166,7 @@ app.MapPut("/sistemas/{id:int}", (int id, SistemaEstelar updated, AppDataContext
     s.qntdPlanetas = updated.qntdPlanetas;
     s.ExploradorId = updated.ExploradorId;
     ctx.SaveChanges();
-    WireRelations();
+    WireRelations(ctx);
     return Results.NoContent();
 });
 
@@ -174,7 +181,7 @@ app.MapDelete("/sistemas/{id:int}", (int id, AppDataContext ctx) =>
     ctx.Planetas.RemoveRange(planetas);
     ctx.Sistemas.Remove(s);
     ctx.SaveChanges();
-    WireRelations();
+    WireRelations(ctx);
     return Results.NoContent();
 });
 
@@ -232,7 +239,7 @@ app.MapPost("/planetas", (Planeta novo, AppDataContext ctx) =>
     explorador.Pontuacao += totalPontos;
     Console.WriteLine($"Pontos adicionados ao explorador {explorador.Nome}: +{totalPontos} (base: {pontosBase}, qualidades: {pontosQualidades}) - Total: {explorador.Pontuacao}");
     ctx.SaveChanges();
-    WireRelations();
+    WireRelations(ctx);
     return Results.Created($"/planetas/{novo.SistemaEstelarId}/{novo.Nome}", novo);
 });
 
@@ -256,7 +263,7 @@ app.MapPut("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome, Plan
     p.ExploradorId = updated.ExploradorId;
 
     ctx.SaveChanges();
-    WireRelations();
+    WireRelations(ctx);
 
     return Results.NoContent();
 });
@@ -273,7 +280,7 @@ app.MapDelete("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome, A
 
     ctx.Planetas.Remove(planeta);
     ctx.SaveChanges();
-    WireRelations();
+    WireRelations(ctx);
 
     return Results.NoContent();
 });
@@ -327,6 +334,15 @@ app.MapGet("/planetas/pesquisa/{nome}", (string nome, AppDataContext ctx) =>
         Explorador = e
     };
     return Results.Ok(result);
+});
+
+app.MapGet("/exploradores/leaderboard", (AppDataContext ctx) =>
+{
+    var topExploradores = ctx.Exploradores
+        .OrderByDescending(e => e.Pontuacao)
+        .ToList();
+
+    return Results.Ok(topExploradores);
 });
 
 

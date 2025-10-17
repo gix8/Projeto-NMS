@@ -5,15 +5,15 @@ namespace NMS_Proj.Models
 {
     public class SistemaEstelar
     {
-        public int Id { get; set; }
+        public int Id { get; set; } // Chave primária
 
-        public string Nome { get; set; }
-        public int qntdPlanetas { get; set; }
+        public string Nome { get; set; } = string.Empty;
+        public int qntdPlanetas { get; set; } = 0;
 
-        public int ExploradorId { get; set; }
+        public int ExploradorId { get; set; } // FK para Explorador
 
         [ForeignKey("ExploradorId")]
-        public Explorador Explorador { get; set; }
+        public Explorador Explorador { get; set; } = null!;
 
         public ICollection<Planeta> Planetas { get; set; } = new List<Planeta>();
     }

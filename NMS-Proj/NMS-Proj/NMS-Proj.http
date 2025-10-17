@@ -1,7 +1,62 @@
 @NMS_Proj_HostAddress = http://localhost:5259
 
-GET {{NMS_Proj_HostAddress}}/weatherforecast/
+GET http://localhost:5259/exploradores/leaderboard 
 Accept: application/json
 
 ###
 
+POST http://localhost:5259/exploradores 
+Content-Type: application/json
+Accept: application/json
+
+{
+    "Nome": "Xis"
+}
+
+###
+
+GET http://localhost:5259/exploradores/1
+Accept: application/json
+###
+
+POST http://localhost:5259/sistemas
+Content-Type: application/json
+Accept: application/json
+
+{
+    "Nome": "Alpha Centauri",
+    "ExploradorId": 1,
+    "qntdPlanetas": 5
+}
+
+###
+
+GET http://localhost:5259/sistemas
+Accept: application/json
+###
+
+POST http://localhost:5259/planetas
+Content-Type: application/json
+Accept: application/json
+
+{
+    "Nome": "Planet X",
+    "SistemaEstelarId": 1,
+    "Clima": "Temperado",
+    "ClimaQualidade": "bom",
+    "Fauna": "Diversa",
+    "FaunaQualidade": "bom",
+    "Flora": "Abundante",
+    "FloraQualidade": "bom",
+    "Sentinelas": "Presentes",
+    "SentinelasQualidade": "ruim",
+    "ExploradorId": 1,
+    "Recursos": "Ouro, Prata"
+}
+
+###
+
+GET http://localhost:5259/exploradores
+Accept: application/json    
+
+###

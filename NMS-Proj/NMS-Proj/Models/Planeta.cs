@@ -7,17 +7,16 @@ namespace NMS_Proj.Models
     public class Planeta
     {
         [Key]
-        public string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;  // Chave primária
 
-        public string NomeQualidade { get; set; }
-        public string Clima { get; set; }
-        public string ClimaQualidade { get; set; }
-        public string Fauna { get; set; }
-        public string FaunaQualidade { get; set; }
-        public string Flora { get; set; }
-        public string FloraQualidade { get; set; }
-        public string Sentinelas { get; set; }
-        public string SentinelasQualidade { get; set; }
+        public string Clima { get; set; } = string.Empty;
+        public string ClimaQualidade { get; set; } = string.Empty;
+        public string Fauna { get; set; } = string.Empty;
+        public string FaunaQualidade { get; set; } = string.Empty;
+        public string Flora { get; set; } = string.Empty;
+        public string FloraQualidade { get; set; } = string.Empty;
+        public string Sentinelas { get; set; } = string.Empty;
+        public string SentinelasQualidade { get; set; } = string.Empty;
 
         public int SistemaEstelarId { get; set; }  //FK para SistemaEstelar
 
@@ -29,10 +28,10 @@ namespace NMS_Proj.Models
 
 
         [ForeignKey("SistemaEstelarId")]
-        public SistemaEstelar SistemaEstelar { get; set; }
+        public SistemaEstelar SistemaEstelar { get; set; } = null!;
 
         // Nova propriedade de navegação: Liga diretamente ao Explorador
         [ForeignKey("ExploradorId")]
-        public Explorador Explorador { get; set; }
+        public Explorador Explorador { get; set; } = null!;
     }
 }
