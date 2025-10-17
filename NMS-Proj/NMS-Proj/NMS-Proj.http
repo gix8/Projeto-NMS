@@ -1,62 +1,39 @@
-@NMS_Proj_HostAddress = http://localhost:5259
-
-GET http://localhost:5259/exploradores/leaderboard 
-Accept: application/json
-
-###
-
-POST http://localhost:5259/exploradores 
+### 1. Criar explorador
+POST http://localhost:5259/exploradores
 Content-Type: application/json
-Accept: application/json
 
 {
     "Nome": "Xis"
 }
 
-###
-
-GET http://localhost:5259/exploradores/1
-Accept: application/json
-###
-
+### 2. Criar sistema (ganha 3 pontos)
 POST http://localhost:5259/sistemas
 Content-Type: application/json
-Accept: application/json
 
 {
-    "Nome": "Alpha Centauri",
+    "Nome": "Alpha System",
     "ExploradorId": 1,
-    "qntdPlanetas": 5
+    "qntdPlanetas": 3
 }
 
-###
-
-GET http://localhost:5259/sistemas
-Accept: application/json
-###
-
+### 3. Criar planeta (5 base + qualidades)
 POST http://localhost:5259/planetas
 Content-Type: application/json
-Accept: application/json
 
 {
-    "Nome": "Planet X",
+    "Nome": "Paradise World",
     "SistemaEstelarId": 1,
-    "Clima": "Temperado",
+    "ExploradorId": 1,
+    "Clima": "Tropical",
     "ClimaQualidade": "bom",
-    "Fauna": "Diversa",
+    "Fauna": "Rica",
     "FaunaQualidade": "bom",
     "Flora": "Abundante",
     "FloraQualidade": "bom",
-    "Sentinelas": "Presentes",
-    "SentinelasQualidade": "ruim",
-    "ExploradorId": 1,
-    "Recursos": "Ouro, Prata"
+    "Sentinelas": "Ausentes",
+    "SentinelasQualidade": "bom",
+    "Recursos": "Ouro, Diamante"
 }
 
-###
-
-GET http://localhost:5259/exploradores
-Accept: application/json    
-
-###
+### 4. Ver leaderboard
+GET http://localhost:5259/exploradores/leaderboard
