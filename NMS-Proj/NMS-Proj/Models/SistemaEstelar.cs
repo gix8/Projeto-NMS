@@ -15,6 +15,5 @@ namespace NMS_Proj.Models
         [ForeignKey("ExploradorId")]
         public Explorador Explorador { get; set; } = null!;
 
-        public ICollection<Planeta> Planetas { get; set; } = new List<Planeta>();
     }
 }

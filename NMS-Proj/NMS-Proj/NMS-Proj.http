@@ -1,39 +1,557 @@
-### 1. Criar explorador
-POST http://localhost:5259/exploradores
+@baseUrl = http://localhost:5259
+
+###############################################################################
+# 🏥 HEALTH CHECK
+###############################################################################
+
+### 1. Health Check - Verificar se API está rodando
+GET {{baseUrl}}/health
+Accept: application/json
+
+###############################################################################
+# 👤 TESTES DE EXPLORADORES (CRUD Completo)
+###############################################################################
+
+### 2. Criar Explorador #1 - Commander Shepard
+POST {{baseUrl}}/exploradores
 Content-Type: application/json
 
 {
-    "Nome": "Xis"
+    "Nome": "Commander Shepard"
 }
 
-### 2. Criar sistema (ganha 3 pontos)
-POST http://localhost:5259/sistemas
+### 3. Criar Explorador #2 - Captain Kirk
+POST {{baseUrl}}/exploradores
 Content-Type: application/json
 
 {
-    "Nome": "Alpha System",
+    "Nome": "Captain Kirk"
+}
+
+### 4. Criar Explorador #3 - Han Solo
+POST {{baseUrl}}/exploradores
+Content-Type: application/json
+
+{
+    "Nome": "Han Solo"
+}
+
+### 5. Criar Explorador #4 - Luke Skywalker
+POST {{baseUrl}}/exploradores
+Content-Type: application/json
+
+{
+    "Nome": "Luke Skywalker"
+}
+
+### 6. Listar TODOS os exploradores
+GET {{baseUrl}}/exploradores
+Accept: application/json
+
+### 7. Buscar explorador #1 (ainda sem sistemas/planetas)
+GET {{baseUrl}}/exploradores/1
+Accept: application/json
+
+### 8. Buscar explorador inexistente (deve retornar 404)
+GET {{baseUrl}}/exploradores/999
+Accept: application/json
+
+### 9. Ver Leaderboard inicial (todos com 0 pontos)
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+###############################################################################
+# 🌌 TESTES DE SISTEMAS ESTELARES
+###############################################################################
+
+### 10. Criar Sistema #1 - Milky Way (5 planetas = +5 pontos)
+POST {{baseUrl}}/sistemas
+Content-Type: application/json
+
+{
+    "Nome": "Milky Way",
+    "ExploradorId": 1,
+    "qntdPlanetas": 5
+}
+
+### 11. Criar Sistema #2 - Andromeda (3 planetas = +3 pontos)
+POST {{baseUrl}}/sistemas
+Content-Type: application/json
+
+{
+    "Nome": "Andromeda",
+    "ExploradorId": 2,
+    "qntdPlanetas": 3
+}
+
+### 12. Criar Sistema #3 - Alpha Centauri (7 planetas = +7 pontos)
+POST {{baseUrl}}/sistemas
+Content-Type: application/json
+
+{
+    "Nome": "Alpha Centauri",
+    "ExploradorId": 1,
+    "qntdPlanetas": 7
+}
+
+### 13. Criar Sistema #4 - Pegasus (10 planetas = +10 pontos)
+POST {{baseUrl}}/sistemas
+Content-Type: application/json
+
+{
+    "Nome": "Pegasus",
+    "ExploradorId": 3,
+    "qntdPlanetas": 10
+}
+
+### 14. Criar Sistema #5 - Outer Rim (15 planetas = +15 pontos)
+POST {{baseUrl}}/sistemas
+Content-Type: application/json
+
+{
+    "Nome": "Outer Rim",
+    "ExploradorId": 4,
+    "qntdPlanetas": 15
+}
+
+### 15. Ver Leaderboard após criar sistemas
+# Luke Skywalker: 15 pontos
+# Shepard: 12 pontos (5+7)
+# Han Solo: 10 pontos
+# Kirk: 3 pontos
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 16. Listar todos os sistemas
+GET {{baseUrl}}/sistemas
+Accept: application/json
+
+### 17. Ver sistema #1 com detalhes
+GET {{baseUrl}}/sistemas/1
+Accept: application/json
+
+###############################################################################
+# 🪐 TESTES DE PLANETAS - Todas as variações de pontuação
+###############################################################################
+
+### 18. Planeta PERFEITO - 4 bom (5 + 4 = 9 pontos) - Explorador 1
+POST {{baseUrl}}/planetas
+Content-Type: application/json
+
+{
+    "Nome": "Eden Prime",
+    "SistemaEstelarId": 1,
+    "ExploradorId": 1,
+    "Clima": "Paradisíaco",
+    "ClimaQualidade": "bom",
+    "Fauna": "Abundante",
+    "FaunaQualidade": "bom",
+    "Flora": "Exuberante",
+    "FloraQualidade": "bom",
+    "Sentinelas": "Amigáveis",
+    "SentinelasQualidade": "bom",
+    "Recursos": "Ouro, Platina, Diamante"
+}
+
+### 19. Planeta 3 bom, 1 ruim (5 + 3 - 1 = 7 pontos) - Explorador 1
+POST {{baseUrl}}/planetas
+Content-Type: application/json
+
+{
+    "Nome": "Noveria",
+    "SistemaEstelarId": 1,
+    "ExploradorId": 1,
+    "Clima": "Temperado",
+    "ClimaQualidade": "bom",
+    "Fauna": "Rica",
+    "FaunaQualidade": "bom",
+    "Flora": "Variada",
+    "FloraQualidade": "bom",
+    "Sentinelas": "Hostis",
+    "SentinelasQualidade": "ruim",
+    "Recursos": "Cristais"
+}
+
+### 20. Planeta 2 bom, 2 ruim (5 + 2 - 2 = 5 pontos) - Explorador 2
+POST {{baseUrl}}/planetas
+Content-Type: application/json
+
+{
+    "Nome": "Hoth",
+    "SistemaEstelarId": 2,
+    "ExploradorId": 2,
+    "Clima": "Gélido",
+    "ClimaQualidade": "ruim",
+    "Fauna": "Escassa",
+    "FaunaQualidade": "ruim",
+    "Flora": "Bonita",
+    "FloraQualidade": "bom",
+    "Sentinelas": "Raras",
+    "SentinelasQualidade": "bom",
+    "Recursos": "Gelo"
+}
+
+### 21. Planeta 1 bom, 3 ruim (5 + 1 - 3 = 3 pontos) - Explorador 3
+POST {{baseUrl}}/planetas
+Content-Type: application/json
+
+{
+    "Nome": "Mustafar",
+    "SistemaEstelarId": 4,
+    "ExploradorId": 3,
+    "Clima": "Vulcânico",
+    "ClimaQualidade": "ruim",
+    "Fauna": "Perigosa",
+    "FaunaQualidade": "ruim",
+    "Flora": "Morta",
+    "FloraQualidade": "ruim",
+    "Sentinelas": "Passivas",
+    "SentinelasQualidade": "bom",
+    "Recursos": "Lava, Obsidiana"
+}
+
+### 22. Planeta PÉSSIMO - 4 ruim (5 - 4 = 1 ponto) - Explorador 4
+POST {{baseUrl}}/planetas
+Content-Type: application/json
+
+{
+    "Nome": "Hell World",
+    "SistemaEstelarId": 5,
+    "ExploradorId": 4,
+    "Clima": "Tóxico",
+    "ClimaQualidade": "ruim",
+    "Fauna": "Hostil",
+    "FaunaQualidade": "ruim",
+    "Flora": "Venenosa",
+    "FloraQualidade": "ruim",
+    "Sentinelas": "Assassinas",
+    "SentinelasQualidade": "ruim",
+    "Recursos": "Veneno, Radiação"
+}
+
+### 23. Planeta SEM qualidades (5 + 0 = 5 pontos) - Explorador 2
+POST {{baseUrl}}/planetas
+Content-Type: application/json
+
+{
+    "Nome": "Desert Moon",
+    "SistemaEstelarId": 2,
+    "ExploradorId": 2,
+    "Clima": "Árido",
+    "ClimaQualidade": "",
+    "Fauna": "Inexistente",
+    "FaunaQualidade": "",
+    "Flora": "Nenhuma",
+    "FloraQualidade": "",
+    "Sentinelas": "Ausentes",
+    "SentinelasQualidade": "",
+    "Recursos": "Areia, Silício"
+}
+
+### 24. Planeta com 3 vazias, 1 bom (5 + 1 = 6 pontos) - Explorador 3
+POST {{baseUrl}}/planetas
+Content-Type: application/json
+
+{
+    "Nome": "Tatooine",
+    "SistemaEstelarId": 4,
+    "ExploradorId": 3,
+    "Clima": "Desértico",
+    "ClimaQualidade": "",
+    "Fauna": "Diversa",
+    "FaunaQualidade": "bom",
+    "Flora": "Rara",
+    "FloraQualidade": "",
+    "Sentinelas": "Poucas",
+    "SentinelasQualidade": "",
+    "Recursos": "Especiarias"
+}
+
+### 25. Planeta com 2 bom, 1 ruim, 1 vazio (5 + 2 - 1 = 6 pontos) - Explorador 4
+POST {{baseUrl}}/planetas
+Content-Type: application/json
+
+{
+    "Nome": "Naboo",
+    "SistemaEstelarId": 5,
+    "ExploradorId": 4,
+    "Clima": "Tropical",
+    "ClimaQualidade": "bom",
+    "Fauna": "Variada",
+    "FaunaQualidade": "bom",
+    "Flora": "Seca",
+    "FloraQualidade": "",
+    "Sentinelas": "Agressivas",
+    "SentinelasQualidade": "ruim",
+    "Recursos": "Plasma"
+}
+
+### 26. Ver Leaderboard após criar planetas
+# Explorador 1 (Shepard): 12 + 9 + 7 = 28 pontos
+# Explorador 4 (Luke): 15 + 1 + 6 = 22 pontos
+# Explorador 3 (Han): 10 + 3 + 6 = 19 pontos
+# Explorador 2 (Kirk): 3 + 5 + 5 = 13 pontos
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 27. Ver explorador #1 com todos seus sistemas e planetas
+GET {{baseUrl}}/exploradores/1
+Accept: application/json
+
+### 28. Listar todos os planetas
+GET {{baseUrl}}/planetas
+Accept: application/json
+
+### 29. Listar planetas do sistema #1
+GET {{baseUrl}}/planetas?sistemaId=1
+Accept: application/json
+
+### 30. Ver planetas do sistema #1 (via endpoint do sistema)
+GET {{baseUrl}}/sistemas/1/planetas
+Accept: application/json
+
+### 31. Buscar planeta específico
+GET {{baseUrl}}/planetas/1/Eden Prime
+Accept: application/json
+
+### 32. Pesquisar planeta por nome
+GET {{baseUrl}}/planetas/pesquisa/tatooine
+Accept: application/json
+
+###############################################################################
+# 🗑️ TESTES DE DELEÇÃO - Pontos NÃO são removidos!
+###############################################################################
+
+### 33. CHECKPOINT - Ver pontuação ANTES das deleções
+# Shepard: 28, Luke: 22, Han: 19, Kirk: 13
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 34. Deletar planeta "Desert Moon" (tinha 5 pontos)
+# Kirk continua com 13 pontos (não perde os 5)
+DELETE {{baseUrl}}/planetas/2/Desert Moon
+
+### 35. Verificar que planeta foi deletado
+GET {{baseUrl}}/planetas/2/Desert Moon
+Accept: application/json
+
+### 36. Ver leaderboard - Kirk ainda tem 13 pontos!
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 37. Ver sistema #2 - agora tem apenas 1 planeta
+GET {{baseUrl}}/sistemas/2/planetas
+Accept: application/json
+
+### 38. Deletar Sistema #3 "Alpha Centauri" (tinha 7 pontos)
+# ⚠️ ATENÇÃO: Shepard continua com 28 pontos (não perde os 7)
+DELETE {{baseUrl}}/sistemas/3
+
+### 39. Verificar que sistema foi deletado
+GET {{baseUrl}}/sistemas/3
+Accept: application/json
+
+### 40. Ver leaderboard - Shepard AINDA tem 28 pontos!
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 41. Ver explorador #1 - sistema Alpha Centauri não aparece mais
+GET {{baseUrl}}/exploradores/1
+Accept: application/json
+
+### 42. Criar novo sistema para Shepard (3 planetas = +3 pontos)
+POST {{baseUrl}}/sistemas
+Content-Type: application/json
+
+{
+    "Nome": "Novo Sistema",
     "ExploradorId": 1,
     "qntdPlanetas": 3
 }
 
-### 3. Criar planeta (5 base + qualidades)
-POST http://localhost:5259/planetas
+### 43. Ver leaderboard - Shepard agora tem 28 + 3 = 31 pontos
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 44. Deletar Sistema #2 completo com planeta
+# Sistema tem 1 planeta (Hoth = 5 pontos)
+# Kirk continua com 13 pontos mesmo deletando sistema + planeta
+DELETE {{baseUrl}}/sistemas/2
+
+### 45. Ver leaderboard - Kirk AINDA tem 13 pontos!
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 46. Ver explorador #2 - sem sistemas e sem planetas, mas 13 pontos
+GET {{baseUrl}}/exploradores/2
+Accept: application/json
+
+### 47. Deletar Explorador #3 (Han Solo)
+# Tinha: 1 sistema (10 pts) + 2 planetas (3+6=9 pts) = 19 pontos total
+# Deleta sistema Pegasus e planetas Mustafar + Tatooine
+DELETE {{baseUrl}}/exploradores/3
+
+### 48. Verificar que explorador foi deletado
+GET {{baseUrl}}/exploradores/3
+Accept: application/json
+
+### 49. Verificar que sistema Pegasus foi deletado
+GET {{baseUrl}}/sistemas/4
+Accept: application/json
+
+### 50. Verificar que planeta Tatooine foi deletado
+GET {{baseUrl}}/planetas/4/Tatooine
+Accept: application/json
+
+### 51. Ver leaderboard final - Han Solo não aparece mais
+# Shepard: 31 pontos
+# Luke: 22 pontos  
+# Kirk: 13 pontos
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+###############################################################################
+# ✨ TESTES ADICIONAIS - Acumulação de pontos
+###############################################################################
+
+### 52. Criar mais planetas para Luke (acumular pontos)
+POST {{baseUrl}}/planetas
 Content-Type: application/json
 
 {
-    "Nome": "Paradise World",
-    "SistemaEstelarId": 1,
-    "ExploradorId": 1,
-    "Clima": "Tropical",
+    "Nome": "Coruscant",
+    "SistemaEstelarId": 5,
+    "ExploradorId": 4,
+    "Clima": "Urbano",
     "ClimaQualidade": "bom",
-    "Fauna": "Rica",
+    "Fauna": "Variada",
     "FaunaQualidade": "bom",
-    "Flora": "Abundante",
+    "Flora": "Controlada",
     "FloraQualidade": "bom",
-    "Sentinelas": "Ausentes",
+    "Sentinelas": "Organizadas",
     "SentinelasQualidade": "bom",
-    "Recursos": "Ouro, Diamante"
+    "Recursos": "Tecnologia Avançada"
 }
 
-### 4. Ver leaderboard
-GET http://localhost:5259/exploradores/leaderboard
+### 53. Ver leaderboard - Luke tem 22 + 9 = 31 pontos agora!
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 54. Criar planeta para Kirk (acumular pontos)
+POST {{baseUrl}}/planetas
+Content-Type: application/json
+
+{
+    "Nome": "Vulcan",
+    "SistemaEstelarId": 1,
+    "ExploradorId": 2,
+    "Clima": "Quente",
+    "ClimaQualidade": "bom",
+    "Fauna": "Lógica",
+    "FaunaQualidade": "bom",
+    "Flora": "Desértica",
+    "FloraQualidade": "",
+    "Sentinelas": "Lógicas",
+    "SentinelasQualidade": "bom",
+    "Recursos": "Dilithium"
+}
+
+### 55. Ver leaderboard - Kirk tem 13 + 8 = 21 pontos
+# Shepard: 31, Luke: 31, Kirk: 21
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 56. Criar novo sistema para Kirk (5 planetas = +5 pontos)
+POST {{baseUrl}}/sistemas
+Content-Type: application/json
+
+{
+    "Nome": "Federation Space",
+    "ExploradorId": 2,
+    "qntdPlanetas": 5
+}
+
+### 57. Ver leaderboard - Kirk tem 21 + 5 = 26 pontos
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 58. Deletar planeta "Vulcan" de Kirk (tinha 8 pontos)
+# Kirk CONTINUA com 26 pontos!
+DELETE {{baseUrl}}/planetas/1/Vulcan
+
+### 59. VERIFICAÇÃO FINAL - Kirk ainda tem 26 pontos
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 60. Ver todos exploradores com estatísticas
+GET {{baseUrl}}/exploradores
+Accept: application/json
+
+### 61. Ver todos sistemas ativos
+GET {{baseUrl}}/sistemas
+Accept: application/json
+
+### 62. Ver todos planetas ativos
+GET {{baseUrl}}/planetas
+Accept: application/json
+
+### 63. Atualizar nome de um explorador
+PUT {{baseUrl}}/exploradores/1
+Content-Type: application/json
+
+{
+    "Nome": "Commander Shepard (N7 Elite)"
+}
+
+### 64. Ver leaderboard final com nome atualizado
+GET {{baseUrl}}/exploradores/leaderboard
+Accept: application/json
+
+### 65. Health check final
+GET {{baseUrl}}/health
+Accept: application/json
+
+###############################################################################
+# 📊 RESUMO FINAL ESPERADO (após todos os testes)
+###############################################################################
+#
+# LEADERBOARD FINAL:
+# ┌──────────────────────────────────────────────────────┐
+# │ Posição │ Nome                      │ Pontos         │
+# ├──────────────────────────────────────────────────────┤
+# │ 1º      │ Commander Shepard (N7)    │ 31 pontos      │
+# │ 1º      │ Luke Skywalker            │ 31 pontos      │
+# │ 3º      │ Captain Kirk              │ 26 pontos      │
+# └──────────────────────────────────────────────────────┘
+#
+# SISTEMAS ATIVOS:
+# - Milky Way (Explorador 1) - 5 planetas
+# - Novo Sistema (Explorador 1) - 3 planetas
+# - Outer Rim (Explorador 4) - 15 planetas
+# - Federation Space (Explorador 2) - 5 planetas
+#
+# PLANETAS ATIVOS:
+# - Eden Prime (Shepard) - 9 pontos
+# - Noveria (Shepard) - 7 pontos
+# - Hell World (Luke) - 1 ponto
+# - Naboo (Luke) - 6 pontos
+# - Coruscant (Luke) - 9 pontos
+#
+# DELETADOS (mas pontos preservados!):
+# ❌ Explorador: Han Solo (removido com sistema e planetas)
+# ❌ Sistema: Alpha Centauri (Shepard mantém 28→31 pontos)
+# ❌ Sistema: Andromeda (Kirk mantém 13→26 pontos)
+# ❌ Sistema: Pegasus (com Han Solo)
+# ❌ Planeta: Desert Moon (Kirk mantém pontos)
+# ❌ Planeta: Hoth (com sistema Andromeda)
+# ❌ Planeta: Mustafar (com Han Solo)
+# ❌ Planeta: Tatooine (com Han Solo)
+# ❌ Planeta: Vulcan (Kirk mantém 26 pontos)
+#
+# 🎯 CONCEITO DEMONSTRADO:
+# - Pontos são ACUMULATIVOS e PERMANENTES
+# - Deletar sistemas/planetas NÃO remove pontos do explorador
+# - Exploradores mantêm histórico de pontos mesmo sem recursos ativos
+# - Apenas deletar o EXPLORADOR remove os pontos (remove o jogador)
+#
+###############################################################################

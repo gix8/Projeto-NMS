@@ -10,7 +10,7 @@ builder.Services.AddDbContext<AppDataContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// ✅ CORREÇÃO CRÍTICA: Configurar JSON para MINIMAL APIs
+// Configurar JSON para MINIMAL APIs
 builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
 {
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -37,21 +37,61 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/exploradores", (AppDataContext ctx) => 
 {
-    var exploradores = ctx.Exploradores.ToList();
+    var exploradores = ctx.Exploradores
+        .Select(e => new
+        {
+            e.Id,
+            e.Nome,
+            e.Pontuacao
+        })
+        .ToList();
     return Results.Ok(exploradores);
 });
 
 app.MapGet("/exploradores/{id:int}", (int id, AppDataContext ctx) =>
 {
     var e = ctx.Exploradores.Find(id);
-    return e is null ? Results.NotFound() : Results.Ok(e);
+    if (e is null) return Results.NotFound();
+    
+    // Busca sistemas e planetas usando apenas as FKs
+    var sistemas = ctx.Sistemas
+        .Where(s => s.ExploradorId == id)
+        .Select(s => new { s.Id, s.Nome, s.qntdPlanetas })
+        .ToList();
+    
+    var planetas = ctx.Planetas
+        .Where(p => p.ExploradorId == id)
+        .Select(p => new { 
+            p.Nome, 
+            p.SistemaEstelarId,
+            p.Clima, 
+            p.Fauna, 
+            p.Flora, 
+            p.Sentinelas, 
+            p.Recursos 
+        })
+        .ToList();
+    
+    return Results.Ok(new
+    {
+        e.Id,
+        e.Nome,
+        e.Pontuacao,
+        SistemasEstelares = sistemas,
+        PlanetasExplorados = planetas
+    });
 });
 
 app.MapPost("/exploradores", (Explorador novo, AppDataContext ctx) =>
 {
     ctx.Exploradores.Add(novo);
     ctx.SaveChanges();
-    return Results.Created($"/exploradores/{novo.Id}", novo);
+    return Results.Created($"/exploradores/{novo.Id}", new
+    {
+        novo.Id,
+        novo.Nome,
+        novo.Pontuacao
+    });
 });
 
 app.MapPut("/exploradores/{id:int}", (int id, Explorador updated, AppDataContext ctx) =>
@@ -69,6 +109,7 @@ app.MapDelete("/exploradores/{id:int}", (int id, AppDataContext ctx) =>
     var e = ctx.Exploradores.Find(id);
     if (e is null) return Results.NotFound();
 
+    // Deleta usando FKs
     var sistemas = ctx.Sistemas.Where(s => s.ExploradorId == id).ToList();
     ctx.Sistemas.RemoveRange(sistemas);
 
@@ -96,17 +137,28 @@ app.MapGet("/exploradores/pesquisa/{nome}", (string nome, AppDataContext ctx) =>
 
     if (e is null) return Results.NotFound();
 
+    // Busca usando apenas FKs
     var sistemasEstelares = ctx.Sistemas
         .Where(s => s.ExploradorId == e.Id)
+        .Select(s => new { s.Id, s.Nome, s.qntdPlanetas })
         .ToList();
 
     var planetasExplorados = ctx.Planetas
         .Where(p => p.ExploradorId == e.Id)
+        .Select(p => new { 
+            p.Nome, 
+            p.SistemaEstelarId,
+            p.Clima, 
+            p.Fauna, 
+            p.Flora, 
+            p.Sentinelas, 
+            p.Recursos 
+        })
         .ToList();
 
     var result = new
     {
-        Explorador = e,
+        Explorador = new { e.Id, e.Nome, e.Pontuacao },
         SistemasEstelares = sistemasEstelares,
         PlanetasExplorados = planetasExplorados
     };
@@ -117,20 +169,72 @@ app.MapGet("/exploradores/pesquisa/{nome}", (string nome, AppDataContext ctx) =>
 
 app.MapGet("/sistemas", (AppDataContext ctx) => 
 {
-    var sistemas = ctx.Sistemas.ToList();
+    var sistemas = ctx.Sistemas
+        .Select(s => new
+        {
+            s.Id,
+            s.Nome,
+            s.qntdPlanetas,
+            s.ExploradorId,
+            ExploradorNome = ctx.Exploradores
+                .Where(e => e.Id == s.ExploradorId)
+                .Select(e => e.Nome)
+                .FirstOrDefault()
+        })
+        .ToList();
     return Results.Ok(sistemas);
 });
 
 app.MapGet("/sistemas/{id:int}", (int id, AppDataContext ctx) =>
 {
     var s = ctx.Sistemas.Find(id);
-    return s is null ? Results.NotFound() : Results.Ok(s);
+    if (s is null) return Results.NotFound();
+    
+    // Busca explorador e planetas usando FKs
+    var explorador = ctx.Exploradores.Find(s.ExploradorId);
+    var planetas = ctx.Planetas
+        .Where(p => p.SistemaEstelarId == id)
+        .Select(p => new { 
+            p.Nome, 
+            p.Clima, 
+            p.Fauna, 
+            p.Flora, 
+            p.Sentinelas, 
+            p.Recursos,
+            p.ExploradorId
+        })
+        .ToList();
+    
+    return Results.Ok(new
+    {
+        s.Id,
+        s.Nome,
+        s.qntdPlanetas,
+        s.ExploradorId,
+        ExploradorNome = explorador?.Nome,
+        Planetas = planetas
+    });
 });
 
 app.MapGet("/sistemas/{id:int}/planetas", (int id, AppDataContext ctx) =>
 {
+    // Busca planetas usando apenas a FK
     var planetas = ctx.Planetas
         .Where(p => p.SistemaEstelarId == id)
+        .Select(p => new
+        {
+            p.Nome,
+            p.Clima,
+            p.ClimaQualidade,
+            p.Fauna,
+            p.FaunaQualidade,
+            p.Flora,
+            p.FloraQualidade,
+            p.Sentinelas,
+            p.SentinelasQualidade,
+            p.Recursos,
+            p.ExploradorId
+        })
         .ToList();
     return Results.Ok(planetas);
 });
@@ -148,7 +252,6 @@ app.MapPost("/sistemas", (SistemaEstelar novo, AppDataContext ctx) =>
 
     ctx.SaveChanges();
     
-    // Retorna objeto simples para evitar ciclos
     var resultado = new
     {
         id = novo.Id,
@@ -179,6 +282,7 @@ app.MapDelete("/sistemas/{id:int}", (int id, AppDataContext ctx) =>
     var s = ctx.Sistemas.Find(id);
     if (s is null) return Results.NotFound();
     
+    // Deleta planetas usando FK
     var planetas = ctx.Planetas.Where(p => p.SistemaEstelarId == id).ToList();
     ctx.Planetas.RemoveRange(planetas);
     ctx.Sistemas.Remove(s);
@@ -195,7 +299,31 @@ app.MapGet("/planetas", ([FromQuery] int? sistemaId, AppDataContext ctx) =>
     if (sistemaId.HasValue)
         query = query.Where(p => p.SistemaEstelarId == sistemaId.Value);
     
-    return Results.Ok(query.ToList());
+    var planetas = query.Select(p => new
+    {
+        p.Nome,
+        p.SistemaEstelarId,
+        SistemaNome = ctx.Sistemas
+            .Where(s => s.Id == p.SistemaEstelarId)
+            .Select(s => s.Nome)
+            .FirstOrDefault(),
+        p.ExploradorId,
+        ExploradorNome = ctx.Exploradores
+            .Where(e => e.Id == p.ExploradorId)
+            .Select(e => e.Nome)
+            .FirstOrDefault(),
+        p.Clima,
+        p.ClimaQualidade,
+        p.Fauna,
+        p.FaunaQualidade,
+        p.Flora,
+        p.FloraQualidade,
+        p.Sentinelas,
+        p.SentinelasQualidade,
+        p.Recursos
+    }).ToList();
+    
+    return Results.Ok(planetas);
 });
 
 app.MapGet("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome, AppDataContext ctx) =>
@@ -204,7 +332,32 @@ app.MapGet("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome, AppD
         .FirstOrDefault(p => p.SistemaEstelarId == sistemaId && 
                              p.Nome.ToLower() == nome.ToLower());
 
-    return p is null ? Results.NotFound() : Results.Ok(p);
+    if (p is null) return Results.NotFound();
+    
+    // Busca sistema e explorador usando FKs
+    var sistema = ctx.Sistemas.Find(p.SistemaEstelarId);
+    var explorador = ctx.Exploradores.Find(p.ExploradorId);
+    
+    return Results.Ok(new
+    {
+        Planeta = new
+        {
+            p.Nome,
+            p.Clima,
+            p.ClimaQualidade,
+            p.Fauna,
+            p.FaunaQualidade,
+            p.Flora,
+            p.FloraQualidade,
+            p.Sentinelas,
+            p.SentinelasQualidade,
+            p.Recursos,
+            p.SistemaEstelarId,
+            p.ExploradorId
+        },
+        SistemaNome = sistema?.Nome,
+        ExploradorNome = explorador?.Nome
+    });
 });
 
 app.MapGet("/planetas/pesquisa/{nome}", (string nome, AppDataContext ctx) =>
@@ -214,8 +367,9 @@ app.MapGet("/planetas/pesquisa/{nome}", (string nome, AppDataContext ctx) =>
 
     if (p is null) return Results.NotFound();
 
-    var s = ctx.Sistemas.Find(p.SistemaEstelarId);
-    var e = ctx.Exploradores.Find(p.ExploradorId);
+    // Busca usando FKs
+    var sistema = ctx.Sistemas.Find(p.SistemaEstelarId);
+    var explorador = ctx.Exploradores.Find(p.ExploradorId);
 
     var result = new
     {
@@ -230,16 +384,19 @@ app.MapGet("/planetas/pesquisa/{nome}", (string nome, AppDataContext ctx) =>
             p.FloraQualidade,
             p.Sentinelas,
             p.SentinelasQualidade,
-            p.Recursos
+            p.Recursos,
+            p.SistemaEstelarId,
+            p.ExploradorId
         },
-        SistemaEstelar = s != null ? new { s.Id, s.Nome } : null,
-        Explorador = e != null ? new { e.Id, e.Nome, e.Pontuacao } : null
+        SistemaEstelar = sistema != null ? new { sistema.Id, sistema.Nome, sistema.qntdPlanetas } : null,
+        Explorador = explorador != null ? new { explorador.Id, explorador.Nome, explorador.Pontuacao } : null
     };
     return Results.Ok(result);
 });
 
 app.MapPost("/planetas", (Planeta novo, AppDataContext ctx) =>
 {
+    // Validações usando FKs
     var sistema = ctx.Sistemas.Find(novo.SistemaEstelarId);
     if (sistema is null)
         return Results.BadRequest(new { erro = "Sistema estelar não encontrado" });
@@ -286,7 +443,6 @@ app.MapPost("/planetas", (Planeta novo, AppDataContext ctx) =>
     
     ctx.SaveChanges();
     
-    // Retorna objeto simples
     var resultado = new
     {
         planeta = new
@@ -302,7 +458,9 @@ app.MapPost("/planetas", (Planeta novo, AppDataContext ctx) =>
             novo.SentinelasQualidade,
             novo.Recursos,
             novo.SistemaEstelarId,
-            novo.ExploradorId
+            SistemaNome = sistema.Nome,
+            novo.ExploradorId,
+            ExploradorNome = explorador.Nome
         },
         pontuacao = new
         {
