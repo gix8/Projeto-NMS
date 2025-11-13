@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Leaderboard from './components/Leaderboard';
+import ExploradorForm from './components/ExploradorForm';
+import SistemaForm from './components/SistemaForm';
+import PlanetaForm from './components/PlanetaForm';
 
 function App() {
+  const [refresh, setRefresh] = useState(0);
+
+  const handleSuccess = () => {
+    setRefresh(prev => prev + 1);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>🚀 NMS Explorer Manager</h1>
+      
+      <div className="grid">
+        <Leaderboard key={refresh} />
+        <ExploradorForm onSuccess={handleSuccess} />
+      </div>
+
+      <div className="grid">
+        <SistemaForm onSuccess={handleSuccess} />
+        <PlanetaForm onSuccess={handleSuccess} />
+      </div>
     </div>
   );
 }

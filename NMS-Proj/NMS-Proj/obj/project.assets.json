@@ -2997,19 +2997,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\giova\\.nuget\\packages\\": {}
+    "C:\\Users\\Luiz Felipe\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\giova\\Desktop\\Projeto-NMS\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
+      "projectUniqueName": "C:\\Users\\Luiz Felipe\\Desktop\\csharp\\Projeto-NMS\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
       "projectName": "NMS-Proj",
-      "projectPath": "C:\\Users\\giova\\Desktop\\Projeto-NMS\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
-      "packagesPath": "C:\\Users\\giova\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\giova\\Desktop\\Projeto-NMS\\NMS-Proj\\NMS-proj\\obj\\",
+      "projectPath": "C:\\Users\\Luiz Felipe\\Desktop\\csharp\\Projeto-NMS\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
+      "packagesPath": "C:\\Users\\Luiz Felipe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Luiz Felipe\\Desktop\\csharp\\Projeto-NMS\\NMS-Proj\\NMS-proj\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\giova\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Luiz Felipe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -3076,7 +3081,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.416/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
