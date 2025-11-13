@@ -28,9 +28,9 @@
   --color-bg-darker: #05070e;
 
   /* Textos */
-  --color-text-light: #e2e8f0;
-  --color-text-lighter: #f1f5f9;
-  --color-text-muted: #cbd5e1;
+  --color-text-dark: #e2e8f0;
+  --color-text-darker: #f1f5f9;
+  --color-text-dark: #cbd5e1;
   --color-text-dark: #1e293b;
 
   /* Status Colors */
@@ -159,8 +159,8 @@
   :root {
     --color-bg-dark: #f8fafc;
     --color-bg-darker: #f1f5f9;
-    --color-text-light: #1e293b;
-    --color-text-lighter: #0f172a;
-    --color-text-muted: #64748b;
+    --color-text-dark: #1e293b;
+    --color-text-darker: #0f172a;
+    --color-text-dark: #64748b;
   }
 }

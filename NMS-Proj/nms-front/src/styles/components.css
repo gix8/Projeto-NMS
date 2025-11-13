@@ -52,7 +52,7 @@ button > *,
 .btn-primary,
 button.btn-primary {
   background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-light));
-  color: var(--color-text-lighter);
+  color: var(--color-text-darker);
   border-color: var(--color-secondary-light);
   box-shadow: var(--glow-purple);
 }
@@ -221,13 +221,13 @@ button:disabled:hover {
 
 .card-subtitle {
   font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
+  color: var(--color-text-dark);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .card-text {
-  color: var(--color-text-light);
+  color: var(--color-text-dark);
   line-height: var(--line-height-relaxed);
 }
 
@@ -250,15 +250,15 @@ select {
   font-size: var(--font-size-base);
   border: 2px solid var(--color-secondary);
   border-radius: var(--border-radius-lg);
-  background: linear-gradient(135deg, rgba(26, 31, 58, 0.5) 0%, rgba(15, 20, 32, 0.5) 100%);
-  color: var(--color-text-light);
+  background: linear-gradient(135deg, rgba(243, 244, 245, 0.5) 0%, rgba(205, 207, 212, 0.5) 100%);
+  color: var(--color-text-dark);
   transition: all var(--transition-normal);
   font-family: inherit;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--color-text-muted);
+  color: var(--color-text-dark);
 }
 
 input:focus,
@@ -345,7 +345,7 @@ label {
   letter-spacing: 0.05em;
   border-radius: var(--border-radius-full);
   background: linear-gradient(135deg, var(--color-secondary), var(--color-accent-cyan));
-  color: var(--color-text-lighter);
+  color: var(--color-text-darker);
   box-shadow: var(--glow-purple-sm);
 }
 
@@ -379,7 +379,7 @@ label {
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--color-text-muted);
+  color: var(--color-text-dark);
   border-bottom: 3px solid transparent;
   cursor: pointer;
   transition: all var(--transition-normal);
@@ -465,7 +465,7 @@ label {
   transform: translateX(-50%);
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-primary);
-  color: var(--color-text-lighter);
+  color: var(--color-text-darker);
   border: 1px solid var(--color-secondary);
   border-radius: var(--border-radius-md);
   font-size: var(--font-size-sm);

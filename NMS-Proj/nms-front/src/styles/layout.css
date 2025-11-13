@@ -53,11 +53,11 @@ body::before {
   background-image:
     radial-gradient(2px 2px at 20% 30%, var(--color-accent-cyan), transparent),
     radial-gradient(2px 2px at 60% 70%, var(--color-accent-gold), transparent),
-    radial-gradient(1px 1px at 50% 50%, var(--color-text-lighter), transparent),
+    radial-gradient(1px 1px at 50% 50%, var(--color-text-darker), transparent),
     radial-gradient(1px 1px at 80% 10%, var(--color-secondary-light), transparent),
     radial-gradient(2px 2px at 90% 60%, var(--color-accent-cyan-light), transparent),
     radial-gradient(1px 1px at 30% 80%, var(--color-accent-gold), transparent),
-    radial-gradient(1px 1px at 10% 40%, var(--color-text-lighter), transparent),
+    radial-gradient(1px 1px at 10% 40%, var(--color-text-darker), transparent),
     radial-gradient(2px 2px at 40% 90%, var(--color-secondary-light), transparent),
     radial-gradient(1px 1px at 70% 20%, var(--color-accent-cyan), transparent),
     radial-gradient(2px 2px at 15% 60%, var(--color-accent-gold-light), transparent);
