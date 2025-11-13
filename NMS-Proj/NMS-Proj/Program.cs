@@ -25,6 +25,16 @@ builder.Services.AddControllers()
         opts.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     });
 
+    builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -511,5 +521,7 @@ app.MapDelete("/planetas/{sistemaId:int}/{nome}", (int sistemaId, string nome, A
 });
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok", timestamp = DateTime.UtcNow }));
+
+app.UseCors("AllowReact");
 
 app.Run();
