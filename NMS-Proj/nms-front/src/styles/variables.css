@@ -1,0 +1,166 @@
+/* ========================================
+   VARIABLES.CSS - Variáveis CSS customizadas
+   ======================================== */
+
+:root {
+  /* ===== PALETA DE CORES ===== */
+  /* Cores Primárias */
+  --color-primary: #1a1f3a;
+  --color-primary-light: #2a2f4a;
+  --color-primary-dark: #0f1420;
+
+  /* Cores Secundárias */
+  --color-secondary: #7c3aed;
+  --color-secondary-light: #a855f7;
+  --color-secondary-dark: #6d28d9;
+
+  /* Acentos */
+  --color-accent-cyan: #06b6d4;
+  --color-accent-cyan-light: #22d3ee;
+  --color-accent-cyan-dark: #0891b2;
+
+  --color-accent-gold: #f59e0b;
+  --color-accent-gold-light: #fbbf24;
+  --color-accent-gold-dark: #d97706;
+
+  /* Backgrounds */
+  --color-bg-dark: #0a0e1a;
+  --color-bg-darker: #05070e;
+
+  /* Textos */
+  --color-text-light: #e2e8f0;
+  --color-text-lighter: #f1f5f9;
+  --color-text-muted: #cbd5e1;
+  --color-text-dark: #1e293b;
+
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #06b6d4;
+
+  /* ===== ESPAÇAMENTOS ===== */
+  --spacing-xs: 0.25rem;    /* 4px */
+  --spacing-sm: 0.5rem;     /* 8px */
+  --spacing-md: 1rem;       /* 16px */
+  --spacing-lg: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;       /* 32px */
+  --spacing-2xl: 3rem;      /* 48px */
+  --spacing-3xl: 4rem;      /* 64px */
+
+  /* ===== FONTES ===== */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  --font-family-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono',
+    'Droid Sans Mono', 'Source Code Pro', monospace;
+  --font-family-display: 'Poppins', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-lg: 1.125rem;  /* 18px */
+  --font-size-xl: 1.25rem;   /* 20px */
+  --font-size-2xl: 1.5rem;   /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem;  /* 36px */
+  --font-size-5xl: 3rem;     /* 48px */
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
+
+  /* ===== BORDAS ===== */
+  --border-radius-sm: 0.25rem;    /* 4px */
+  --border-radius-md: 0.5rem;     /* 8px */
+  --border-radius-lg: 0.75rem;    /* 12px */
+  --border-radius-xl: 1rem;       /* 16px */
+  --border-radius-2xl: 1.5rem;    /* 24px */
+  --border-radius-full: 9999px;
+
+  --border-width-thin: 1px;
+  --border-width-normal: 2px;
+  --border-width-thick: 3px;
+
+  /* ===== SOMBRAS ===== */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Glow Effects (Neon) */
+  --glow-cyan: 0 0 10px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3);
+  --glow-cyan-sm: 0 0 8px rgba(6, 182, 212, 0.4);
+  --glow-cyan-lg: 0 0 20px rgba(6, 182, 212, 0.6), 0 0 40px rgba(6, 182, 212, 0.4);
+
+  --glow-purple: 0 0 10px rgba(124, 58, 237, 0.5), 0 0 20px rgba(124, 58, 237, 0.3);
+  --glow-purple-sm: 0 0 8px rgba(124, 58, 237, 0.4);
+  --glow-purple-lg: 0 0 20px rgba(124, 58, 237, 0.6), 0 0 40px rgba(124, 58, 237, 0.4);
+
+  --glow-gold: 0 0 10px rgba(245, 158, 11, 0.5), 0 0 20px rgba(245, 158, 11, 0.3);
+  --glow-gold-sm: 0 0 8px rgba(245, 158, 11, 0.4);
+
+  --glow-white: 0 0 10px rgba(226, 232, 240, 0.3), 0 0 20px rgba(226, 232, 240, 0.15);
+
+  /* ===== TRANSIÇÕES ===== */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+
+  /* ===== BREAKPOINTS ===== */
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* ===== Z-INDEX ===== */
+  --z-hide: -1;
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal: 1040;
+  --z-tooltip: 1050;
+
+  /* ===== GRADIENTES ESPACIAIS ===== */
+  --gradient-space-dark: linear-gradient(135deg, #0a0e1a 0%, #1a1f3a 50%, #0f1420 100%);
+  --gradient-space-blue: linear-gradient(135deg, #1a1f3a 0%, #7c3aed 50%, #06b6d4 100%);
+  --gradient-space-neon: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #f59e0b 100%);
+  --gradient-nebula: linear-gradient(180deg, rgba(124, 58, 237, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%);
+
+  /* ===== FILTROS ===== */
+  --filter-blur-sm: blur(4px);
+  --filter-blur-md: blur(8px);
+  --filter-blur-lg: blur(16px);
+}
+
+/* Dark Mode (Padrão neste caso) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Light Mode (Alternativa opcional) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg-dark: #f8fafc;
+    --color-bg-darker: #f1f5f9;
+    --color-text-light: #1e293b;
+    --color-text-lighter: #0f172a;
+    --color-text-muted: #64748b;
+  }
+}

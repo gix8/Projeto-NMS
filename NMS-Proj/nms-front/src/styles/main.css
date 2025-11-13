@@ -1,0 +1,534 @@
+/* ========================================
+   MAIN.CSS - Arquivo principal de importação
+   ======================================== */
+
+/* Reset de estilos */
+@import url('./reset.css');
+
+/* Variáveis CSS customizadas */
+@import url('./variables.css');
+
+/* Tipografia */
+@import url('./typography.css');
+
+/* Layout - Grid, Flexbox e Containers */
+@import url('./layout.css');
+
+/* Componentes - Botões, Cards, Inputs */
+@import url('./components.css');
+
+/* Animações */
+@import url('./animations.css');
+
+/* ========================================
+   ESTILOS GLOBAIS ADICIONAIS
+   ======================================== */
+
+/* Scroll Bar Customizado */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-secondary), var(--color-accent-cyan));
+  border-radius: var(--border-radius-full);
+  box-shadow: var(--glow-purple-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-secondary-light), var(--color-accent-cyan-light));
+  box-shadow: var(--glow-purple);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-color: linear-gradient(180deg, var(--color-secondary), var(--color-accent-cyan)) var(--color-bg-darker);
+  scrollbar-width: thin;
+}
+
+/* Selection */
+::selection {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent-cyan));
+  color: var(--color-text-lighter);
+  text-shadow: var(--glow-cyan-sm);
+}
+
+::-moz-selection {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-accent-cyan));
+  color: var(--color-text-lighter);
+}
+
+/* Focus Visible */
+:focus-visible {
+  outline: 2px solid var(--color-accent-cyan);
+  outline-offset: 2px;
+  box-shadow: var(--glow-cyan);
+}
+
+/* Placeholder */
+::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+::-ms-input-placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+/* ===== CLASSES UTILITÁRIAS ===== */
+
+/* Visibilidade */
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Opacidade */
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-25 {
+  opacity: 0.25;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.opacity-75 {
+  opacity: 0.75;
+}
+
+.opacity-100 {
+  opacity: 1;
+}
+
+/* Cores de Texto */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.text-accent-cyan {
+  color: var(--color-accent-cyan);
+}
+
+.text-accent-gold {
+  color: var(--color-accent-gold);
+}
+
+.text-light {
+  color: var(--color-text-light);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+.text-error {
+  color: var(--color-error);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+/* Background Colors */
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-dark {
+  background-color: var(--color-bg-dark);
+}
+
+.bg-darker {
+  background-color: var(--color-bg-darker);
+}
+
+.bg-gradient-space {
+  background: var(--gradient-space-dark);
+}
+
+.bg-gradient-neon {
+  background: var(--gradient-space-neon);
+}
+
+/* Borders */
+.border {
+  border: 1px solid var(--color-secondary);
+}
+
+.border-cyan {
+  border-color: var(--color-accent-cyan);
+}
+
+.border-purple {
+  border-color: var(--color-secondary);
+}
+
+.border-gold {
+  border-color: var(--color-accent-gold);
+}
+
+.rounded {
+  border-radius: var(--border-radius-lg);
+}
+
+.rounded-sm {
+  border-radius: var(--border-radius-sm);
+}
+
+.rounded-md {
+  border-radius: var(--border-radius-md);
+}
+
+.rounded-lg {
+  border-radius: var(--border-radius-lg);
+}
+
+.rounded-xl {
+  border-radius: var(--border-radius-xl);
+}
+
+.rounded-2xl {
+  border-radius: var(--border-radius-2xl);
+}
+
+.rounded-full {
+  border-radius: var(--border-radius-full);
+}
+
+/* Shadows */
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+.shadow-xl {
+  box-shadow: var(--shadow-xl);
+}
+
+.shadow-glow {
+  box-shadow: var(--glow-purple);
+}
+
+.shadow-glow-cyan {
+  box-shadow: var(--glow-cyan);
+}
+
+.shadow-glow-gold {
+  box-shadow: var(--glow-gold);
+}
+
+/* Text Alignment */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+/* Text Transform */
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.normal-case {
+  text-transform: none;
+}
+
+/* Font Weight */
+.font-light {
+  font-weight: var(--font-weight-light);
+}
+
+.font-normal {
+  font-weight: var(--font-weight-normal);
+}
+
+.font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+.font-extrabold {
+  font-weight: var(--font-weight-extrabold);
+}
+
+/* Line Height */
+.leading-tight {
+  line-height: var(--line-height-tight);
+}
+
+.leading-normal {
+  line-height: var(--line-height-normal);
+}
+
+.leading-relaxed {
+  line-height: var(--line-height-relaxed);
+}
+
+.leading-loose {
+  line-height: var(--line-height-loose);
+}
+
+/* Letter Spacing */
+.tracking-tight {
+  letter-spacing: -0.05em;
+}
+
+.tracking-normal {
+  letter-spacing: 0;
+}
+
+.tracking-wide {
+  letter-spacing: 0.05em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.1em;
+}
+
+/* Cursor */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-default {
+  cursor: default;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.cursor-help {
+  cursor: help;
+}
+
+/* Transforms */
+.scale-75 {
+  transform: scale(0.75);
+}
+
+.scale-90 {
+  transform: scale(0.9);
+}
+
+.scale-100 {
+  transform: scale(1);
+}
+
+.scale-110 {
+  transform: scale(1.1);
+}
+
+.scale-125 {
+  transform: scale(1.25);
+}
+
+.translate-x-full {
+  transform: translateX(100%);
+}
+
+.translate-x-half {
+  transform: translateX(50%);
+}
+
+.-translate-x-full {
+  transform: translateX(-100%);
+}
+
+.translate-y-full {
+  transform: translateY(100%);
+}
+
+.-translate-y-full {
+  transform: translateY(-100%);
+}
+
+/* Transition */
+.transition-fast {
+  transition: all var(--transition-fast);
+}
+
+.transition-normal {
+  transition: all var(--transition-normal);
+}
+
+.transition-slow {
+  transition: all var(--transition-slow);
+}
+
+.transition-none {
+  transition: none;
+}
+
+/* Display */
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.inline {
+  display: inline;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+/* Filters */
+.blur {
+  filter: blur(8px);
+}
+
+.blur-sm {
+  filter: blur(4px);
+}
+
+.blur-lg {
+  filter: blur(16px);
+}
+
+.brightness-75 {
+  filter: brightness(0.75);
+}
+
+.brightness-100 {
+  filter: brightness(1);
+}
+
+.brightness-125 {
+  filter: brightness(1.25);
+}
+
+.contrast-75 {
+  filter: contrast(0.75);
+}
+
+.contrast-100 {
+  filter: contrast(1);
+}
+
+.contrast-125 {
+  filter: contrast(1.25);
+}
+
+/* ===== RESPONSIVIDADE GLOBAL ===== */
+
+@media (max-width: 640px) {
+  :root {
+    --font-size-xl: 1.125rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+
+  img {
+    max-width: 100% !important;
+  }
+
+  @page {
+    margin: 0.5cm;
+  }
+}

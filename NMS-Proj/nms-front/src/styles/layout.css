@@ -1,0 +1,473 @@
+/* ========================================
+   LAYOUT.CSS - Grid, Flexbox e Containers
+   ======================================== */
+
+/* ===== CONTAINERS ===== */
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+.container-sm {
+  max-width: 640px;
+}
+
+.container-md {
+  max-width: 768px;
+}
+
+.container-lg {
+  max-width: 1024px;
+}
+
+.container-xl {
+  max-width: 1280px;
+}
+
+.container-2xl {
+  max-width: 1536px;
+}
+
+.container-fluid {
+  width: 100%;
+}
+
+/* ===== BODY ===== */
+body {
+  background: var(--gradient-space-dark);
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background com padrão de estrelas */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, var(--color-accent-cyan), transparent),
+    radial-gradient(2px 2px at 60% 70%, var(--color-accent-gold), transparent),
+    radial-gradient(1px 1px at 50% 50%, var(--color-text-lighter), transparent),
+    radial-gradient(1px 1px at 80% 10%, var(--color-secondary-light), transparent),
+    radial-gradient(2px 2px at 90% 60%, var(--color-accent-cyan-light), transparent),
+    radial-gradient(1px 1px at 30% 80%, var(--color-accent-gold), transparent),
+    radial-gradient(1px 1px at 10% 40%, var(--color-text-lighter), transparent),
+    radial-gradient(2px 2px at 40% 90%, var(--color-secondary-light), transparent),
+    radial-gradient(1px 1px at 70% 20%, var(--color-accent-cyan), transparent),
+    radial-gradient(2px 2px at 15% 60%, var(--color-accent-gold-light), transparent);
+  background-repeat: repeat;
+  background-size: 200% 200%;
+  pointer-events: none;
+  z-index: var(--z-hide);
+  opacity: 0.3;
+  animation: twinkleStars 20s ease-in-out infinite;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-nebula);
+  pointer-events: none;
+  z-index: var(--z-hide);
+  opacity: 0.15;
+}
+
+@keyframes twinkleStars {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* ===== FLEXBOX UTILITIES ===== */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+.items-baseline {
+  align-items: baseline;
+}
+
+.gap-xs {
+  gap: var(--spacing-xs);
+}
+
+.gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.gap-md {
+  gap: var(--spacing-md);
+}
+
+.gap-lg {
+  gap: var(--spacing-lg);
+}
+
+.gap-xl {
+  gap: var(--spacing-xl);
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+/* ===== GRID UTILITIES ===== */
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-auto-flow-row {
+  grid-auto-flow: row;
+}
+
+.grid-auto-flow-col {
+  grid-auto-flow: column;
+}
+
+.auto-rows-auto {
+  grid-auto-rows: auto;
+}
+
+.gap-cols-xs {
+  column-gap: var(--spacing-xs);
+}
+
+.gap-cols-sm {
+  column-gap: var(--spacing-sm);
+}
+
+.gap-cols-md {
+  column-gap: var(--spacing-md);
+}
+
+.gap-cols-lg {
+  column-gap: var(--spacing-lg);
+}
+
+.gap-rows-xs {
+  row-gap: var(--spacing-xs);
+}
+
+.gap-rows-sm {
+  row-gap: var(--spacing-sm);
+}
+
+.gap-rows-md {
+  row-gap: var(--spacing-md);
+}
+
+.gap-rows-lg {
+  row-gap: var(--spacing-lg);
+}
+
+/* ===== SIZING ===== */
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.w-min {
+  width: min-content;
+}
+
+.h-min {
+  height: min-content;
+}
+
+.w-max {
+  width: max-content;
+}
+
+.h-max {
+  height: max-content;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+/* ===== POSITIONING ===== */
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* ===== PADDING & MARGIN ===== */
+.p-0 {
+  padding: 0;
+}
+
+.p-xs {
+  padding: var(--spacing-xs);
+}
+
+.p-sm {
+  padding: var(--spacing-sm);
+}
+
+.p-md {
+  padding: var(--spacing-md);
+}
+
+.p-lg {
+  padding: var(--spacing-lg);
+}
+
+.p-xl {
+  padding: var(--spacing-xl);
+}
+
+.p-2xl {
+  padding: var(--spacing-2xl);
+}
+
+.p-3xl {
+  padding: var(--spacing-3xl);
+}
+
+.px-md {
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+.py-md {
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.m-auto {
+  margin: auto;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.mt-md {
+  margin-top: var(--spacing-md);
+}
+
+.mb-md {
+  margin-bottom: var(--spacing-md);
+}
+
+.ml-md {
+  margin-left: var(--spacing-md);
+}
+
+.mr-md {
+  margin-right: var(--spacing-md);
+}
+
+/* ===== OVERFLOW ===== */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 640px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid-cols-5,
+  .grid-cols-6 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .grid-cols-5 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .grid-cols-6 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .grid-cols-5 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .grid-cols-6 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

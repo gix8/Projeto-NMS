@@ -1,3 +1,4 @@
+import './styles/main.css';
 import { useState } from 'react';
 import './App.css';
 import Leaderboard from './components/Leaderboard';
@@ -9,7 +10,7 @@ function App() {
   const [refresh, setRefresh] = useState(0);
 
   const handleSuccess = () => {
-    setRefresh(prev => prev + 1);
+    setRefresh((prev: number) => prev + 1);
   };
 
   return (
