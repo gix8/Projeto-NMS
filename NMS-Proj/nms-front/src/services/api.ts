@@ -39,5 +39,25 @@ export const api = {
       body: JSON.stringify(data)
     });
     return response.json();
+  },
+
+  async getSistemaById(id: number) {
+  const response = await fetch(`${API_URL}/sistemas/${id}`);
+  return response.json();
+  },
+
+  async getSistemas() {
+  const response = await fetch(`${API_URL}/sistemas`);
+  return response.json();
+  },
+  
+  async getExploradorById(id: number) {
+  const response = await fetch(`${API_URL}/exploradores/${id}`);
+  return response.json();
+  },
+
+  async searchExploradorByName(nome: string) {
+  const response = await fetch(`${API_URL}/exploradores/pesquisa/${encodeURIComponent(nome)}`);
+  return response.json();
   }
 };

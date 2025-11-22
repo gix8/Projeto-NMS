@@ -5,6 +5,8 @@ import Leaderboard from './components/Leaderboard';
 import ExploradorForm from './components/ExploradorForm';
 import SistemaForm from './components/SistemaForm';
 import PlanetaForm from './components/PlanetaForm';
+import SistemaSearch from './components/SistemaSearch';
+import ExploradorSearch from './components/ExploradorSearch';
 
 function App() {
   const [refresh, setRefresh] = useState(0);
@@ -20,6 +22,11 @@ function App() {
       <div className="grid">
         <Leaderboard key={refresh} />
         <ExploradorForm onSuccess={handleSuccess} />
+      </div>
+
+      <div className="grid">
+        <SistemaSearch key={refresh} />
+        <ExploradorSearch key={refresh} />
       </div>
 
       <div className="grid">

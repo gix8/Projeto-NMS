@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7VO1qEibxDM=",
+  "dgSpecHash": "jb7qGcdfKt8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\giova\\Desktop\\Projeto-NMS\\NMS-Proj\\NMS-Proj\\NMS-Proj.csproj",
+  "projectFilePath": "C:\\Users\\giova\\Desktop\\Projeto-NMS\\NMS-Proj\\NMS-proj\\NMS-Proj.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\giova\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\giova\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.20\\microsoft.aspnetcore.openapi.8.0.20.nupkg.sha512",
