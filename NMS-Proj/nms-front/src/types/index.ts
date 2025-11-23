@@ -10,6 +10,8 @@ export interface SistemaEstelar {
     nome: string;
     qntdPlanetas: number;
     pontuacao: number;
+    exploradorId: number;
+    exploradorNome: string;
 }
 
 export interface Planeta {
