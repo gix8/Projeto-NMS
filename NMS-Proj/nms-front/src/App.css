@@ -386,3 +386,122 @@ tr:hover {
   background: #f8f9fa;
   border-radius: 8px;
 }
+
+.section-title {
+  margin: 40px 0 20px 0;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.section-title h2 {
+  color: white;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+/* Manage Section */
+.manage-section {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+}
+
+.manage-section h2 {
+  color: #dc3545;
+  border-bottom: 2px solid #dc3545;
+  padding-bottom: 10px;
+}
+
+.loading {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+  font-style: italic;
+}
+
+.manage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.manage-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #6c757d;
+  transition: all 0.3s;
+}
+
+.manage-item:hover {
+  background: #e9ecef;
+  border-left-color: #dc3545;
+  transform: translateX(5px);
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.item-name {
+  font-weight: bold;
+  color: #333;
+  font-size: 1rem;
+}
+
+.item-details {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.btn-delete:hover:not(:disabled) {
+  background: #c82333;
+  transform: scale(1.05);
+}
+
+.btn-delete:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Scrollbar customizado para manage-list */
+.manage-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.manage-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.manage-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.manage-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

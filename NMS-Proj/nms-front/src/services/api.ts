@@ -16,6 +16,13 @@ export const api = {
     return response.json();
   },
 
+  async deleteExplorador(id: number) {
+    const response = await fetch(`${API_URL}/exploradores/${id}`, {
+      method: 'DELETE'
+    });
+    return response.ok;
+  },
+
   async getLeaderboard() {
     const response = await fetch(`${API_URL}/exploradores/leaderboard`);
     return response.json();
@@ -31,6 +38,13 @@ export const api = {
     return response.json();
   },
 
+  async deleteSistema(id: number) {
+    const response = await fetch(`${API_URL}/sistemas/${id}`, {
+      method: 'DELETE'
+    });
+    return response.ok;
+  },
+
   // Planetas
   async createPlaneta(data: any) {
     const response = await fetch(`${API_URL}/planetas`, {
@@ -39,6 +53,18 @@ export const api = {
       body: JSON.stringify(data)
     });
     return response.json();
+  },
+
+  async getPlanetas() {
+    const response = await fetch(`${API_URL}/planetas`);
+    return response.json();
+  },
+
+  async deletePlaneta(sistemaId: number, nome: string) {
+    const response = await fetch(`${API_URL}/planetas/${sistemaId}/${encodeURIComponent(nome)}`, {
+      method: 'DELETE'
+    });
+    return response.ok;
   },
 
   async getSistemaById(id: number) {

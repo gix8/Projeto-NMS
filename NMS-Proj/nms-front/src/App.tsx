@@ -7,6 +7,9 @@ import SistemaForm from './components/SistemaForm';
 import PlanetaForm from './components/PlanetaForm';
 import SistemaSearch from './components/SistemaSearch';
 import ExploradorSearch from './components/ExploradorSearch';
+import ManageExploradores from './components/ManageExplorador';  
+import ManageSistemas from './components/ManageSistema';          
+import ManagePlanetas from './components/ManagePlaneta'; 
 
 function App() {
   const [refresh, setRefresh] = useState(0);
@@ -25,14 +28,23 @@ function App() {
       </div>
 
       <div className="grid">
-        <SistemaSearch key={refresh} />
-        <ExploradorSearch key={refresh} />
+        <SistemaSearch />
+        <ExploradorSearch />
       </div>
 
       <div className="grid">
         <SistemaForm onSuccess={handleSuccess} />
         <PlanetaForm onSuccess={handleSuccess} />
       </div>
+
+      <div className="section-title">
+        <h2>🗑️ Gerenciamento de Dados</h2>
+      </div>
+      <div className="grid">
+        <ManageExploradores onUpdate={handleSuccess} />
+        <ManageSistemas onUpdate={handleSuccess} />
+      </div>
+      <ManagePlanetas onUpdate={handleSuccess} />
     </div>
   );
 }
